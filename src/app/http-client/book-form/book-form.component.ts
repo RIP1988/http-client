@@ -1,0 +1,50 @@
+import { HttpClient } from '@angular/common/http';
+import { BookService } from './../../services/book.service';
+import { Book } from './../Book';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-book-form',
+  templateUrl: './book-form.component.html',
+  styleUrls: ['./book-form.component.css']
+})
+export class BookFormComponent implements OnInit {
+
+bookForm = new FormGroup({
+  title: new FormControl(null, [Validators.required]),
+  author: new FormControl(null, [Validators.required])
+});
+
+  constructor(private bookService: BookService, private httpClient: HttpClient,
+    private route: ActivatedRoute, private router: Router ) { }
+
+  ngOnInit() {
+    const id = this.route.snapshot.params['id'];
+    let editedBook: Book;
+    if (id) {
+      this.bookService.getBook(id).subscribe((book) => {
+        if (book) {
+          editedBook = new Book(book.getId(), book.getTitle(), book.getAuthor());
+          this.bookForm.patchValue({
+            title: editedBook.getTitle(),
+            author: editedBook.getAuthor()
+          });
+        }
+      });
+    }
+  }
+
+  saveBook() {
+    const id: number = +this.route.snapshot.params['id'];
+    const title = this.bookForm.get('title').value;
+    const author = this.bookForm.get('author').value;
+    const newBook = new Book(id,
+      title,
+      author);
+    this.httpClient.post('/api/savebook',
+    newBook).subscribe();
+  }
+
+}

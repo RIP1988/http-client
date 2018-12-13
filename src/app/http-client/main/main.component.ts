@@ -17,12 +17,8 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.bookService.booksSubject.subscribe((books) => {
       this.books = books;
-    })
+    });
     this.bookService.getBooks();
-  }
-
-  saveBook() {
-    this.bookService.saveBook();
   }
 
   initDB() {

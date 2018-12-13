@@ -1,5 +1,4 @@
 import { BookService } from './../../services/book.service';
-import { HttpClient } from '@angular/common/http';
 import { Book } from './../Book';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,15 +12,13 @@ export class MainComponent implements OnInit {
   initAllowed = true;
   books: Book[] = [];
 
-  constructor(private httpClient: HttpClient, private bookService: BookService) { }
+  constructor(private bookService: BookService) { }
 
   ngOnInit() {
-  }
-
-  getBooks() {
-    this.bookService.getBooks().subscribe((response) => {
-      this.books = response;
-    });
+    this.bookService.booksSubject.subscribe((books) => {
+      this.books = books;
+    })
+    this.bookService.getBooks();
   }
 
   saveBook() {

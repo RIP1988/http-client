@@ -43,8 +43,7 @@ bookForm = new FormGroup({
     const newBook = new Book(id,
       title,
       author);
-    this.httpClient.post('/api/savebook',
-    newBook).subscribe();
+    this.bookService.saveBook(newBook);
   }
 
 }

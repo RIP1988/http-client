@@ -2,29 +2,6 @@
   HttpClient app
 </h3>
 <hr>
-<div class="row">
-    <div class="col-md-1">
-        <button type="button" class="btn btn-success" (click)="initDB()" [disabled]="!initAllowed || books.length > 0">
-          InitDB
-        </button>
-      </div>
-  <div class="col-md-1">
-    <button type="button" class="btn btn-primary" (click)="getBooks()" [disabled]="initAllowed">
-      GET
-    </button>
-  </div>
-  <div class="col-md-1">
-    <button type="button" class="btn btn-danger" (click)="saveBook()" [disabled]="initAllowed">
-      POST
-    </button>
-  </div>
-  <div class="col-md-1">
-    <button type="button" class="btn btn-warning" [disabled]="initAllowed">
-      PUT
-    </button>
-  </div>
-</div>
-<hr>
 <div class="row" *ngIf="books.length > 0">
   <div class="col-md-4">
     <table class="table">

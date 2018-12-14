@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { BookService } from './../../services/book.service';
 import { Book } from './../Book';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ export class MainComponent implements OnInit {
   initAllowed = true;
   books: Book[] = [];
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService, private router: Router) { }
 
   ngOnInit() {
     this.bookService.booksSubject.subscribe((books) => {
@@ -24,6 +25,10 @@ export class MainComponent implements OnInit {
   initDB() {
     this.bookService.initDb();
     this.initAllowed = false;
+  }
+
+  openEditBook(id) {
+    this.router.navigate(['book', id]);
   }
 
 }

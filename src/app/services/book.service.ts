@@ -8,7 +8,7 @@ import { Observable, Subject} from 'rxjs';
 })
 export class BookService {
 
-  books: Book[];
+  books: Book[] = [];
   booksSubject = new Subject<Book[]>();
 
   constructor(private httpClient: HttpClient) { }
@@ -23,9 +23,8 @@ export class BookService {
     });
   }
 
-  getBook(id): Observable<Book> {
-    const params = new HttpParams().set('id', id);
-    return this.httpClient.get<Book>('/api/book', {params});
+  getBook(id): Book {
+    return this.books.find(book => book.id === id);
   }
 
   saveBook(book: Book) {
@@ -44,7 +43,9 @@ export class BookService {
 
   initDb() {
     this.httpClient.post('/api/init', null).subscribe((books: Book[]) => {
-      this.books = books;
+      books.forEach(book => {
+        this.books.push(book);
+      });
       this.getBooks();
     });
   }

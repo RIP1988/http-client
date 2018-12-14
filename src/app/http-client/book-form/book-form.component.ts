@@ -31,8 +31,12 @@ bookForm = new FormGroup({
             title: editedBook.getTitle(),
             author: editedBook.getAuthor()
           });
+        } else {
+          this.router.navigate(['/book']);
         }
       });
+    } else {
+      this.router.navigate(['/book']);
     }
   }
 
@@ -49,6 +53,7 @@ bookForm = new FormGroup({
       this.bookService.saveBook(newOrEditedBook);
     }
     this.bookForm.reset();
+    this.router.navigate(['/book']);
   }
 
 }

@@ -16,6 +16,7 @@ bookForm = new FormGroup({
   title: new FormControl(null, [Validators.required]),
   author: new FormControl(null, [Validators.required])
 });
+editPage = false;
 
   constructor(private bookService: BookService, private httpClient: HttpClient,
     private route: ActivatedRoute, private router: Router ) { }
@@ -31,6 +32,7 @@ bookForm = new FormGroup({
             title: editedBook.getTitle(),
             author: editedBook.getAuthor()
           });
+          this.editPage = true;
         } else {
           this.router.navigate(['/book']);
         }

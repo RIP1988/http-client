@@ -34,6 +34,14 @@ export class BookService {
     });
   }
 
+  editBook(bookToBeSaved: Book) {
+    return this.httpClient.put('/api/savebook', bookToBeSaved).subscribe((savedBook: Book) => {
+      const bookInArray = this.books.find(book => book.id === savedBook.id);
+      const index = this.books.indexOf(bookInArray);
+      this.books[index] = bookToBeSaved;
+    });
+  }
+
   initDb() {
     this.httpClient.post('/api/init', null).subscribe((books: Book[]) => {
       this.books = books;

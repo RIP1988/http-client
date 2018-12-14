@@ -21,12 +21,12 @@ bookForm = new FormGroup({
     private route: ActivatedRoute, private router: Router ) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
+    const id: number = +this.route.snapshot.params['id'];
     let editedBook: Book;
     if (id) {
       this.bookService.getBook(id).subscribe((book) => {
         if (book) {
-          editedBook = new Book(book.getId(), book.getTitle(), book.getAuthor());
+          editedBook = new Book(book.id, book.title, book.author);
           this.bookForm.patchValue({
             title: editedBook.getTitle(),
             author: editedBook.getAuthor()
@@ -40,10 +40,15 @@ bookForm = new FormGroup({
     const id: number = +this.route.snapshot.params['id'];
     const title = this.bookForm.get('title').value;
     const author = this.bookForm.get('author').value;
-    const newBook = new Book(id,
+    const newOrEditedBook = new Book(id,
       title,
       author);
-    this.bookService.saveBook(newBook);
+    if (id) {
+      this.bookService.editBook(newOrEditedBook);
+    } else {
+      this.bookService.saveBook(newOrEditedBook);
+    }
+    this.bookForm.reset();
   }
 
 }

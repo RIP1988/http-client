@@ -10,6 +10,7 @@ export class BookService {
 
   books: Book[] = [];
   booksSubject = new Subject<Book[]>();
+  bookSubject = new Subject<Book>();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -23,8 +24,14 @@ export class BookService {
     });
   }
 
-  getBook(id): Book {
-    return this.books.find(book => book.id === id);
+  getBook(id) {
+    if (this.books.length) {
+      this.bookSubject.next(this.books.find(book => book.id === id));
+    } else {
+      this.httpClient.get('/api/book/' + id).subscribe((book: Book) => {
+        this.bookSubject.next(book);
+      });
+    }
   }
 
   saveBook(book: Book) {
@@ -39,6 +46,13 @@ export class BookService {
       const index = this.books.indexOf(bookInArray);
       this.books[index] = bookToBeSaved;
     });
+  }
+
+  deleteBook(id: number) {
+    const params = new HttpParams().set('id', String(id));
+    this.httpClient.delete('/api/deletebook', {params: params}).subscribe();
+    this.books = this.books.filter(book => book.id !== id);
+    this.booksSubject.next(this.books);
   }
 
   initDb() {

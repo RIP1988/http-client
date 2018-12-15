@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  initAllowed = true;
   books: Book[] = [];
 
   constructor(private bookService: BookService, private router: Router) { }
@@ -24,11 +23,14 @@ export class MainComponent implements OnInit {
 
   initDB() {
     this.bookService.initDb();
-    this.initAllowed = false;
   }
 
   openEditBook(id) {
     this.router.navigate(['book', id]);
+  }
+
+  deleteBook(id) {
+    this.bookService.deleteBook(id);
   }
 
 }

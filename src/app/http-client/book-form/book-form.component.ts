@@ -25,17 +25,19 @@ editPage = false;
     const id: number = +this.route.snapshot.params['id'];
     let editedBook: Book;
     if (id) {
-      const book = this.bookService.getBook(id);
-      if (book) {
-        editedBook = new Book(book.id, book.title, book.author);
-        this.bookForm.patchValue({
-          title: editedBook.getTitle(),
-          author: editedBook.getAuthor()
-        });
-        this.editPage = true;
-      } else {
-        this.router.navigate(['/book']);
-      }
+      this.bookService.bookSubject.subscribe((book) => {
+        if (book) {
+          editedBook = new Book(book.id, book.title, book.author);
+          this.bookForm.patchValue({
+            title: editedBook.getTitle(),
+            author: editedBook.getAuthor()
+          });
+          this.editPage = true;
+        } else {
+          this.router.navigate(['/book']);
+        }
+      });
+      this.bookService.getBook(id);
     } else {
       this.router.navigate(['/book']);
     }

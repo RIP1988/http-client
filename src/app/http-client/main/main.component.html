@@ -10,10 +10,15 @@
         <th scope="col">Author</th>
         <th scope="col">ID</th>
       </tr>
-      <tr *ngFor="let book of books" (click)="openEditBook(book.id)">
-        <td>{{ book.title }}</td>
-        <td>{{ book.author }}</td>
-        <td>{{ book.id }}</td>
+      <tr *ngFor="let book of books">
+        <td (click)="openEditBook(book.id)">{{ book.title }}</td>
+        <td (click)="openEditBook(book.id)">{{ book.author }}</td>
+        <td (click)="openEditBook(book.id)">{{ book.id }}</td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="deleteBook(book.id)">
+            Delete
+          </button>
+        </td>
       </tr>
     </table>
   </div>

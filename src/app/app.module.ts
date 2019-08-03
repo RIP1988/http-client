@@ -9,13 +9,15 @@ import { HttpClientComponent } from './http-client/http-client.component';
 import { BookFormComponent } from './http-client/book-form/book-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './http-client/main/main.component';
+import { FunComponent } from './http-client/fun/fun.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       HttpClientComponent,
       BookFormComponent,
-      MainComponent
+      MainComponent,
+      FunComponent
    ],
    imports: [
       BrowserModule,

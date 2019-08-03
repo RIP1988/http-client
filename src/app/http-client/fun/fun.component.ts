@@ -23,7 +23,7 @@ export class FunComponent implements OnInit {
     })
     .then((response) => {
       console.log('obtained response: ' + response);
-      return new Promise((resolve) => resolve(response));
+      return response;
     })
     .catch((err) => {
       console.log('error: ' + err);
@@ -36,7 +36,8 @@ export class FunComponent implements OnInit {
     })
     .catch(err => {
       console.log('error2: ' + err);
-    });
+    })
+    .then(response => console.log('obtained undefined response: ' + response));
   }
 
 }
